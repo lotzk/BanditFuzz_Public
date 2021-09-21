@@ -23,7 +23,7 @@ def is_memout(out,err):
 	return False
 
 def run_solver(solver,benchmark,timeout):
-	tfile = tempfile.NamedTemporaryFile(delete=True)
+	tfile = tempfile.NamedTemporaryFile(delete=False)
 	with open(tfile.name,'w') as outFile:
 		outFile.write(str(benchmark))
 		outFile.close()

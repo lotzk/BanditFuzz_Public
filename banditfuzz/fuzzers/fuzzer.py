@@ -160,7 +160,8 @@ class Fuzzer: #break into loader class (checks settings etc), and one into quant
 
         from .core.variable import BoolVariable
         for _ in range(settings.vars):
-            benchmark.add_var(BoolVariable(f'bool_{_}'))
+            pass
+            #benchmark.add_var(BoolVariable(f'bool_{_}'))
 
         ## ********IN PROGRESS******************
         if settings.arrays:
@@ -214,7 +215,8 @@ class Fuzzer: #break into loader class (checks settings etc), and one into quant
                 from .int.variable import IntVariable
                 # print("Int Test:\n", settings.vars) ## Number: 5
                 for _ in range(settings.vars):  
-                    benchmark.add_var(IntVariable(f'int_{_}'))
+                    pass
+                    #benchmark.add_var(IntVariable(f'int_{_}'))
 
             if settings.real:
                 from .real.variable import RealVariable

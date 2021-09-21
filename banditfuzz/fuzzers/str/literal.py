@@ -18,5 +18,5 @@ class RegExLiteral:
         self.sort = 'reg'
         self.lit = StrLiteral() 
     def __str__(self):
-        return f'(str.to.re {self.lit})'
+        return f'(str.to_re {self.lit})'
     __repr__ = __str__

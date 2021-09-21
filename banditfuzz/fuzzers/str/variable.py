@@ -8,7 +8,7 @@ class StrVariable(Variable):
     __repr__ = __str__
 
     def declare(self):
-        return f"(declare-const {self.name} String)"
+        return f"(declare-fun {self.name} () String)"
 
 
 ## apparantly this is not a thing
