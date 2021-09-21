@@ -230,7 +230,7 @@ class Fuzzer: #break into loader class (checks settings etc), and one into quant
 
         return benchmark
 
-    def mk_ast(self, depth, benchmark, sort='bool'):
+    def mk_ast(self, depth, benchmark, sort='bool', use_vars = True):
         if depth == settings.depth:
             if sort == 'round' or sort == 'reg':
                 return Node(random.choice(self.literals[sort])())
@@ -241,8 +241,13 @@ class Fuzzer: #break into loader class (checks settings etc), and one into quant
             elif sort == "int" and not settings.integer:
                 opts = [IntLiteral(positive=True), IntLiteral(positive=True)]
             else:
-                opts =  [random.choice(benchmark.vars(sort=sort)),    random.choice(self.literals[sort])()]
-            odds =  [1,                                           1]
+                if (use_vars):
+                    opts =  [random.choice(benchmark.vars(sort=sort)),    random.choice(self.literals[sort])()]
+                    odds =  [1,                                           1]
+                else:
+                    opts = [random.choice(self.literals[sort])()]
+                    odds = [1]
+            
             return Node(
                 np.random.choice(
                     p= odds/np.linalg.norm(odds)**2,
@@ -258,7 +263,10 @@ class Fuzzer: #break into loader class (checks settings etc), and one into quant
             ret = Node(random.choice(self.constructs[sort])())
         
         for _ in range(ret.val.arity):
-            ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[_]))
+            if (str(ret.val) in ["str.to_re", "re.++", "re.union", "re.*"]):
+                ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[_], use_vars=False))
+            else:
+                ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[_]))
 
         # if sort == "arr":
         #     for _ in range(ret.val.arity):

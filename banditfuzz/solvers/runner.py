@@ -29,10 +29,24 @@ def run_solver(solver,benchmark,timeout):
 		outFile.close()
 
 		out,err,time = run_command("timeout " + str(timeout+1) + " bash -c \'" + solver + " " + outFile.name + '\'')
-		if time > timeout: return 'timeout',timeout+1, err
-		if is_memout(out,err): return 'memout',time, err
-		if out.lower() in ['sat','unsat']: return out.lower(),time, err
-		if out.lower() in ['unknown']: return out.lower(),time, err
+		
+		if (len(out.splitlines()) > 0):
+			last_out =  out.splitlines()[-1]
+		else:
+			last_out = ""
+
+		if time > timeout: 
+			return 'timeout',timeout+1, err
+		if is_memout(out,err):
+			 return 'memout',time, err
+		if out.lower() in ['sat','unsat']:
+			 return out.lower(),time, err
+		if last_out.lower() in ['sat', 'unsat']:
+			return last_out.lower(),time, err
+		if out.lower() in ['unknown']: 
+			return out.lower(),time, err
+		if last_out.lower() in ['unknown']: 
+			return last_out.lower(),time, err
 
 		warning(f"Error on solver: {solver}, benchmark = \n{str(benchmark)}\nstdout={out}\nerr={err}")
 		return 'err/memory out',time, err

@@ -68,6 +68,7 @@ class BanditFuzz:
 				# 	print("asdf")
 				# 	print(e)
 			self.run_solvers(new_benchmark)
+			print("OK")
 			if new_benchmark.score() > self.best_benchmark.score() or it == 1:
 				print("IMPROVE")
 				self.best_benchmark = new_benchmark

@@ -71,7 +71,7 @@ class NONE:
         ]
         self.chainable = False
     def __str__(self):
-        return "re.none"
+        return "(re.none)"
     __repr__ = __str__
 class RE_ALL:
     def __init__(self):
@@ -365,6 +365,8 @@ class REG_RANGE:
     def __str__(self):
         return "re.range"
     __repr__ = __str__
+
+"""
 class RE_LOOP:
     def __init__(self):
         self.arity = 2
@@ -377,6 +379,8 @@ class RE_LOOP:
     def __str__(self):
         return f"(_ re.loop {random.randint(0,10**6)} {random.randint(0,10**6)})" #a bit hacky... suggestions?
     __repr__ = __str__
+
+
 class RE_POW:
     def __init__(self):
         self.arity = 1
@@ -389,6 +393,8 @@ class RE_POW:
     def __str__(self):
         return f"(_ re.^ {random.randint(0,10**6)})" #a bit hacky... suggestions?
     __repr__ = __str__
+"""
+
 class IS_DIGIT:
     def __init__(self):
         self.arity = 1
@@ -401,6 +407,8 @@ class IS_DIGIT:
     def __str__(self):
         return "str.is_digit"
     __repr__ = __str__
+
+
 class TO_CODE:
     def __init__(self):
         self.arity = 1
