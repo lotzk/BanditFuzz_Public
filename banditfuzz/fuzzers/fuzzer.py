@@ -262,11 +262,15 @@ class Fuzzer: #break into loader class (checks settings etc), and one into quant
         else:
             ret = Node(random.choice(self.constructs[sort])())
         
-        for _ in range(ret.val.arity):
-            if (str(ret.val) in ["str.to_re", "re.++", "re.union", "re.*"]):
-                ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[_], use_vars=False))
-            else:
-                ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[_]))
+        if str(ret.val) == "str.in_re":
+            ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[0]))
+            ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[1], use_vars=False))
+        else:
+            for _ in range(ret.val.arity):
+                if (str(ret.val) in ["str.to_re", "re.++", "re.union", "re.*"]) or not use_vars:
+                    ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[_], use_vars=False))
+                else:
+                    ret.children.append(self.mk_ast(depth=depth+1, benchmark=benchmark, sort=ret.val.sig[_]))
 
         # if sort == "arr":
         #     for _ in range(ret.val.arity):

@@ -67,8 +67,10 @@ class BanditFuzz:
 				# except Exception as e:
 				# 	print("asdf")
 				# 	print(e)
+			print("Running Solvers")
+			sys.stdout.flush()
 			self.run_solvers(new_benchmark)
-			print("OK")
+			
 			if new_benchmark.score() > self.best_benchmark.score() or it == 1:
 				print("IMPROVE")
 				self.best_benchmark = new_benchmark
