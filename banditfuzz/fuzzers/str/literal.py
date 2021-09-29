@@ -2,7 +2,7 @@ import random, unicodedata, string
 
 class StrLiteral:
     def __init__(self):
-        self.n = random.randint(0,10**3)
+        self.n = random.randint(0,20)
         self.val = ''
         self.sort = 'str'
         for _ in range(self.n): self.val += random.choice(string.ascii_letters + string.digits)
@@ -14,7 +14,7 @@ class StrLiteral:
 
 class RegExLiteral:
     def __init__(self):
-        self.n = random.randint(0,10**3)
+        self.n = random.randint(0,20)
         self.sort = 'reg'
         self.lit = StrLiteral() 
     def __str__(self):
